@@ -101,7 +101,8 @@ int main() {
       close(sock);
       freeHeaders(&headers);
       freeHttpStartLine(&sl);
-      return 1;
+      free(clientMessage);
+      continue;
     }
 
     char *body = NULL;
@@ -128,7 +129,6 @@ int main() {
 
             while (lenWritten < bodyLen) {
               if (clientMessage[j] == '\0') {
-                printf("You should not be seeing this!\n");
                 recv(sock, clientMessage + received, bufferSize - received - 1, 0);
               }
 
